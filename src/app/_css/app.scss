@@ -59,13 +59,13 @@ body {
 }
 
 ::selection {
-  background: var(--theme-success-500);
+  background: var(--theme-dark-500);
   color: var(--color-base-800);
 }
 
 ::-moz-selection {
   background: var(--theme-success-500);
-  color: var(--color-base-800);
+  color: var(--color-dark-50);
 }
 
 img {
@@ -99,21 +99,18 @@ h6 {
 }
 
 p {
-  margin: var(--base) 0;
-
-  @include mid-break {
-    margin: calc(var(--base) * .75) 0;
-  }
+  margin: 0;
 }
 
 ul,
 ol {
-  padding-left: var(--base);
-  margin: 0 0 var(--base);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a {
-  color: currentColor;
+  color: var(--color-dark-500);
 
   &:focus {
     opacity: .8;
