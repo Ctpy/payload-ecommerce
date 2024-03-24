@@ -1,6 +1,6 @@
 interface Args {
-  disableLabel?: true
-  disableAppearance?: true
+  disableLabel?: true;
+  disableAppearance?: true;
 }
 
 export const LINK_FIELDS = ({ disableAppearance, disableLabel }: Args = {}): string => `{
@@ -9,6 +9,9 @@ export const LINK_FIELDS = ({ disableAppearance, disableLabel }: Args = {}): str
   type
   newTab
   url
+  icon {
+    url
+  }
   reference {
     relationTo
     value {
@@ -17,4 +20,4 @@ export const LINK_FIELDS = ({ disableAppearance, disableLabel }: Args = {}): str
       }
     }
   }
-}`
+}`;
