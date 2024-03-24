@@ -3,7 +3,6 @@
 }
 
 import React from 'react';
-import Link from 'next/link';
 
 import { Header } from '../../../payload/payload-types';
 import { fetchHeader } from '../../_api/fetchGlobals';
@@ -20,7 +19,7 @@ export async function Header() {
 
   return (
     <>
-      <HeaderComponent header={header}/>
+      <HeaderComponent header={header} />
     </>
   );
 }
