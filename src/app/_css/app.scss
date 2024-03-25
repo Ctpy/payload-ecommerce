@@ -6,7 +6,7 @@
 :root {
   --base: 24px;
   --font-body: 'Jost', sans-serif;
-  --font-mono: 'Jost', sans-serif;
+  --font-jost: 'Jost', sans-serif;
 
   --gutter-h: 180px;
   --block-padding: 120px;
@@ -59,13 +59,13 @@ body {
 }
 
 ::selection {
-  background: var(--theme-dark-500);
+  background: var(--color-dark-500);
   color: var(--color-base-800);
 }
 
 ::-moz-selection {
-  background: var(--theme-success-500);
-  color: var(--color-dark-50);
+  background: var(--color-dark-50);
+  color: var(--color-base-800);
 }
 
 img {
@@ -111,6 +111,7 @@ ol {
 
 a {
   color: var(--color-dark-500);
+  text-decoration: none;
 
   &:focus {
     opacity: .8;
