@@ -6,17 +6,14 @@
   flex-direction: column;
   gap: calc(var(--base) / 2);
   align-items: flex-start;
-  width: 66.66%;
-
-  @include mid-break {
-    width: 100%;
-  }
+  width: 100%;
+  margin-top: 30px;
 }
 
 .submit {
-  margin-top: calc(var(--base) / 2);
+  width: 100%;
 }
 
 .message {
-  margin-bottom: var(--base);
+  margin-top: var(--base);
 }
