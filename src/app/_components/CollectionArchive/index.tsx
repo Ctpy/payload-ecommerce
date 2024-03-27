@@ -166,43 +166,35 @@ export const CollectionArchive: React.FC<Props> = props => {
   return (
     <div className={[classes.collectionArchive, className].filter(Boolean).join(' ')}>
       <div className={classes.scrollRef} ref={scrollRef} />
-      {!isLoading && error && <Gutter>{error}</Gutter>}
+      {!isLoading && error && <div>{error}</div>}
       <Fragment>
         {showPageRange !== false && populateBy !== 'selection' && (
-          <Gutter>
-            <div className={classes.pageRange}>
-              <PageRange
-                collection={relationTo}
-                currentPage={results.page}
-                limit={limit}
-                totalDocs={results.totalDocs}
-              />
-            </div>
-          </Gutter>
-        )}
-        <Gutter>
-          <div className={classes.grid}>
-            {results.docs?.map((result, index) => {
-              if (typeof result === 'object' && result !== null) {
-                return (
-                  <div className={classes.column} key={index}>
-                    <Card doc={result} relationTo={relationTo} showCategories />
-                  </div>
-                );
-              }
-
-              return null;
-            })}
-          </div>
-          {results.totalPages > 1 && populateBy !== 'selection' && (
-            <Pagination
-              className={classes.pagination}
-              onClick={setPage}
-              page={results.page}
-              totalPages={results.totalPages}
+          <div className={classes.pageRange}>
+            <PageRange
+              collection={relationTo}
+              currentPage={results.page}
+              limit={limit}
+              totalDocs={results.totalDocs}
             />
-          )}
-        </Gutter>
+          </div>
+        )}
+        <div className={classes.grid}>
+          {results.docs?.map((result, index) => {
+            if (typeof result === 'object' && result !== null) {
+              return <Card doc={result} relationTo={relationTo} showCategories />;
+            }
+
+            return null;
+          })}
+        </div>
+        {results.totalPages > 1 && populateBy !== 'selection' && (
+          <Pagination
+            className={classes.pagination}
+            onClick={setPage}
+            page={results.page}
+            totalPages={results.totalPages}
+          />
+        )}
       </Fragment>
     </div>
   );
