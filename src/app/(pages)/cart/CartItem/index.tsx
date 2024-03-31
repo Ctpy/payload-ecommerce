@@ -1,80 +1,86 @@
 'use client';
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { Media } from '../../../_components/Media';
 import { Price } from '../../../_components/Price';
-
-import classes from './index.module.scss';
 import { RemoveFromCartButton } from '../../../_components/RemoveFromCartButton';
 
-const CartItem = ({ product, title, metaImage, quantity, addItemToCart }) => {
-  const [quantityState, setQuantityState] = useState(quantity);
+import classes from './index.module.scss';
 
-  const decrementQuantity = () => {
-    setQuantityState(quantityState - 1);
-    addItemToCart(product, quantityState - 1);
+const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
+  const [quantity, setQuantity] = useState(qty);
+
+  const decrementQty = () => {
+    const updatedQty = quantity > 1 ? quantity - 1 : 1;
+
+    setQuantity(updatedQty);
+    addItemToCart({ product, quantity: Number(updatedQty) });
   };
 
-  const incrementQuantity = () => {
-    setQuantityState(quantityState + 1);
-    addItemToCart(product, quantityState + 1);
+  const incrementQty = () => {
+    const updatedQty = quantity + 1;
+
+    setQuantity(updatedQty);
+    addItemToCart({ product, quantity: Number(updatedQty) });
   };
 
-  const enterQuantity = e => {
-    const value = parseInt(e.target.value, 10);
-    if (value < 1) {
-      setQuantityState(1);
-      addItemToCart(product, 1);
-    } else {
-      setQuantityState(value);
-      addItemToCart(product, value);
-    }
+  const enterQty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedQty = Number(e.target.value);
+
+    setQuantity(updatedQty);
+    addItemToCart({ product, quantity: Number(updatedQty) });
   };
 
   return (
     <li className={classes.item} key={title}>
       <Link href={`/products/${product.slug}`} className={classes.mediaWrapper}>
-        {!metaImage && <span>No Image</span>}
+        {!metaImage && <span>No image</span>}
         {metaImage && typeof metaImage !== 'string' && (
-          <Media imgClassName={classes.media} className={classes.media} resource={metaImage} fill />
+          <Media className={classes.media} imgClassName={classes.image} resource={metaImage} fill />
         )}
       </Link>
+
       <div className={classes.itemDetails}>
         <div className={classes.titleWrapper}>
           <h6>{title}</h6>
           <Price product={product} button={false} />
         </div>
+
         <div className={classes.quantity}>
-          <div className={classes.quantityBtn} onClick={decrementQuantity}>
+          <div className={classes.quantityBtn} onClick={decrementQty}>
             <Image
               src="/assets/icons/minus.svg"
               alt="minus"
               width={24}
               height={24}
-              className={classes.qtnBtn}
+              className={classes.qtnBt}
             />
           </div>
+
           <input
             type="text"
             className={classes.quantityInput}
-            value={quantityState}
-            onChange={enterQuantity}
+            value={quantity}
+            onChange={enterQty}
           />
-          <div className={classes.quantityBtn} onClick={incrementQuantity}>
+
+          <div className={classes.quantityBtn} onClick={incrementQty}>
             <Image
               src="/assets/icons/plus.svg"
               alt="plus"
               width={24}
               height={24}
-              className={classes.qtnBtn}
+              className={classes.qtnBt}
             />
           </div>
         </div>
       </div>
+
       <div className={classes.subtotalWrapper}>
-        <Price product={product} button={false} quantity={quantityState} />
+        <Price product={product} button={false} quantity={quantity} />
         <RemoveFromCartButton product={product} />
       </div>
     </li>
