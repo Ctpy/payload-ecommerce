@@ -1,18 +1,18 @@
-import React from 'react'
-import { FieldValues, UseFormRegister, Validate } from 'react-hook-form'
+import React from 'react';
+import { FieldValues, UseFormRegister, Validate } from 'react-hook-form';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 type Props = {
-  name: string
-  label: string
-  register: UseFormRegister<FieldValues & any>
-  required?: boolean
-  error: any
-  type?: 'text' | 'number' | 'password' | 'email'
-  validate?: (value: string) => boolean | string
-  disabled?: boolean
-}
+  name: string;
+  label: string;
+  register: UseFormRegister<FieldValues & any>;
+  required?: boolean;
+  error: any;
+  type?: 'text' | 'number' | 'password' | 'email';
+  validate?: (value: string) => boolean | string;
+  disabled?: boolean;
+};
 
 export const Input: React.FC<Props> = ({
   name,
@@ -55,5 +55,5 @@ export const Input: React.FC<Props> = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};

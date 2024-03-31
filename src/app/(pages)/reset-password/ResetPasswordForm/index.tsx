@@ -1,34 +1,34 @@
-'use client'
+'use client';
 
-import React, { useCallback, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useRouter, useSearchParams } from 'next/navigation'
+import React, { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Button } from '../../../_components/Button'
-import { Input } from '../../../_components/Input'
-import { Message } from '../../../_components/Message'
-import { useAuth } from '../../../_providers/Auth'
+import { Button } from '../../../_components/Button';
+import { Input } from '../../../_components/Input';
+import { Message } from '../../../_components/Message';
+import { useAuth } from '../../../_providers/Auth';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 type FormData = {
-  password: string
-  token: string
-}
+  password: string;
+  token: string;
+};
 
 export const ResetPasswordForm: React.FC = () => {
-  const [error, setError] = useState('')
-  const { login } = useAuth()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const token = searchParams.get('token')
+  const [error, setError] = useState('');
+  const { login } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>()
+  } = useForm<FormData>();
 
   const onSubmit = useCallback(
     async (data: FormData) => {
@@ -41,28 +41,28 @@ export const ResetPasswordForm: React.FC = () => {
             'Content-Type': 'application/json',
           },
         },
-      )
+      );
 
       if (response.ok) {
-        const json = await response.json()
+        const json = await response.json();
 
         // Automatically log the user in after they successfully reset password
-        await login({ email: json.user.email, password: data.password })
+        await login({ email: json.user.email, password: data.password });
 
         // Redirect them to `/account` with success message in URL
-        router.push('/account?success=Password reset successfully.')
+        router.push('/account?success=Password reset successfully.');
       } else {
-        setError('There was a problem while resetting your password. Please try again later.')
+        setError('There was a problem while resetting your password. Please try again later.');
       }
     },
     [router, login],
-  )
+  );
 
   // when Next.js populates token within router,
   // reset form with new token value
   useEffect(() => {
-    reset({ token: token || undefined })
-  }, [reset, token])
+    reset({ token: token || undefined });
+  }, [reset, token]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
@@ -83,5 +83,5 @@ export const ResetPasswordForm: React.FC = () => {
         className={classes.submit}
       />
     </form>
-  )
-}
+  );
+};

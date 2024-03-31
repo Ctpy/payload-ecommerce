@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 export const Chevron: React.FC<{
-  className?: string
-  rotate?: number
+  className?: string;
+  rotate?: number;
 }> = ({ className, rotate }) => {
   return (
     <svg
@@ -22,5 +22,5 @@ export const Chevron: React.FC<{
         vectorEffect="non-scaling-stroke"
       />
     </svg>
-  )
-}
+  );
+};

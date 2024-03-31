@@ -1,5 +1,5 @@
 'use client';
-import React,  from 'react';
+import React from 'react';
 
 import classes from './index.module.scss';
 
@@ -66,6 +66,5 @@ const StatBox = ({ label, value }: { label: string; value: number }) => (
 
 export default Promotion;
 function useEffect(arg0: () => () => void, arg1: undefined[]) {
-    throw new Error('Function not implemented.');
+  throw new Error('Function not implemented.');
 }
-

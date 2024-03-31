@@ -2,7 +2,7 @@ const config = {
   release: {
     branches: ['master', 'next'],
   },
-  plugins
-}
+};
 
-module.exports = config
+module.exports = config;
+export default config;

@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
-import { Metadata } from 'next'
-import Link from 'next/link'
+import React, { Fragment } from 'react';
+import { Metadata } from 'next';
+import Link from 'next/link';
 
-import { CallToActionBlock } from '../../../_blocks/CallToAction'
-import { Gutter } from '../../../_components/Gutter'
-import { VerticalPadding } from '../../../_components/VerticalPadding'
-import { mergeOpenGraph } from '../../../_utilities/mergeOpenGraph'
+import { CallToActionBlock } from '../../../_blocks/CallToAction';
+import { Gutter } from '../../../_components/Gutter';
+import { VerticalPadding } from '../../../_components/VerticalPadding';
+import { mergeOpenGraph } from '../../../_utilities/mergeOpenGraph';
 
 export default async function CallToActionPage() {
   return (
@@ -86,7 +86,7 @@ export default async function CallToActionPage() {
         />
       </VerticalPadding>
     </Fragment>
-  )
+  );
 }
 
 export const metadata: Metadata = {
@@ -96,4 +96,4 @@ export const metadata: Metadata = {
     title: 'Call To Action Block',
     url: '/styleguide/call-to-action',
   }),
-}
+};

@@ -1,6 +1,6 @@
-import type { AfterReadHook } from 'payload/dist/collections/config/types'
+import type { AfterReadHook } from 'payload/dist/collections/config/types';
 
-import type { Page, Product } from '../payload-types'
+import type { Page, Product } from '../payload-types';
 
 export const populateArchiveBlock: AfterReadHook = async ({ doc, context, req: { payload } }) => {
   // pre-populate the archive block if `populateBy` is `collection`
@@ -11,10 +11,10 @@ export const populateArchiveBlock: AfterReadHook = async ({ doc, context, req: {
       if (block.blockType === 'archive') {
         const archiveBlock = block as Extract<Page['layout'][0], { blockType: 'archive' }> & {
           populatedDocs: Array<{
-            relationTo: 'products' | 'pages'
-            value: string
-          }>
-        }
+            relationTo: 'products' | 'pages';
+            value: string;
+          }>;
+        };
 
         if (archiveBlock.populateBy === 'collection' && !context.isPopulatingArchiveBlock) {
           const res: { totalDocs: number; docs: Product[] } = await payload.find({
@@ -29,8 +29,8 @@ export const populateArchiveBlock: AfterReadHook = async ({ doc, context, req: {
                     categories: {
                       in: archiveBlock?.categories
                         ?.map(cat => {
-                          if (typeof cat === 'string' || typeof cat === 'number') return cat
-                          return cat.id
+                          if (typeof cat === 'string' || typeof cat === 'number') return cat;
+                          return cat.id;
                         })
                         .join(','),
                     },
@@ -38,7 +38,7 @@ export const populateArchiveBlock: AfterReadHook = async ({ doc, context, req: {
                 : {}),
             },
             sort: '-publishedOn',
-          })
+          });
 
           return {
             ...block,
@@ -47,16 +47,16 @@ export const populateArchiveBlock: AfterReadHook = async ({ doc, context, req: {
               relationTo: archiveBlock.relationTo,
               value: thisDoc.id,
             })),
-          }
+          };
         }
       }
 
-      return block
+      return block;
     }),
-  )
+  );
 
   return {
     ...doc,
     layout: layoutWithArchive,
-  }
-}
+  };
+};

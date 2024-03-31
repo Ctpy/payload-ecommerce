@@ -1,10 +1,10 @@
-import React from 'react'
-import { Metadata } from 'next'
-import Link from 'next/link'
+import React from 'react';
+import { Metadata } from 'next';
+import Link from 'next/link';
 
-import { Gutter } from '../../../_components/Gutter'
-import { VerticalPadding } from '../../../_components/VerticalPadding'
-import { mergeOpenGraph } from '../../../_utilities/mergeOpenGraph'
+import { Gutter } from '../../../_components/Gutter';
+import { VerticalPadding } from '../../../_components/VerticalPadding';
+import { mergeOpenGraph } from '../../../_utilities/mergeOpenGraph';
 
 export default async function Typography() {
   return (
@@ -41,7 +41,7 @@ export default async function Typography() {
         </p>
       </VerticalPadding>
     </Gutter>
-  )
+  );
 }
 
 export const metadata: Metadata = {
@@ -51,4 +51,4 @@ export const metadata: Metadata = {
     title: 'Typography',
     url: '/styleguide/typography',
   }),
-}
+};

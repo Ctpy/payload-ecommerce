@@ -1,35 +1,35 @@
-'use client'
+'use client';
 
-import React, { useEffect } from 'react'
-import { useSelectedLayoutSegments } from 'next/navigation'
-import { PayloadAdminBar, PayloadAdminBarProps } from 'payload-admin-bar'
+import React, { useEffect } from 'react';
+import { useSelectedLayoutSegments } from 'next/navigation';
+import { PayloadAdminBar, PayloadAdminBarProps } from 'payload-admin-bar';
 
-import { useAuth } from '../../_providers/Auth'
-import { Gutter } from '../Gutter'
+import { useAuth } from '../../_providers/Auth';
+import { Gutter } from '../Gutter';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
-const Title: React.FC = () => <span>Dashboard</span>
+const Title: React.FC = () => <span>Dashboard</span>;
 
 export const AdminBar: React.FC<{
-  adminBarProps?: PayloadAdminBarProps
+  adminBarProps?: PayloadAdminBarProps;
 }> = props => {
-  const { adminBarProps } = props || {}
-  const segments = useSelectedLayoutSegments()
-  const collection = segments?.[1] === 'products' ? 'products' : 'pages'
-  const [show, setShow] = React.useState(false)
+  const { adminBarProps } = props || {};
+  const segments = useSelectedLayoutSegments();
+  const collection = segments?.[1] === 'products' ? 'products' : 'pages';
+  const [show, setShow] = React.useState(false);
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   useEffect(() => {
     if (user) {
-      setShow(true)
+      setShow(true);
     }
-  }, [user])
+  }, [user]);
 
-  const isAdmin = user?.roles?.includes('admin')
+  const isAdmin = user?.roles?.includes('admin');
 
-  if (!isAdmin) return null
+  if (!isAdmin) return null;
 
   return (
     <div className={[classes.adminBar, show && classes.show].filter(Boolean).join(' ')}>
@@ -59,5 +59,5 @@ export const AdminBar: React.FC<{
         />
       </Gutter>
     </div>
-  )
-}
+  );
+};

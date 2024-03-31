@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
-export type VerticalPaddingOptions = 'large' | 'medium' | 'none'
+export type VerticalPaddingOptions = 'large' | 'medium' | 'none';
 
 type Props = {
-  top?: VerticalPaddingOptions
-  bottom?: VerticalPaddingOptions
-  children: React.ReactNode
-  className?: string
-}
+  top?: VerticalPaddingOptions;
+  bottom?: VerticalPaddingOptions;
+  children: React.ReactNode;
+  className?: string;
+};
 
 export const VerticalPadding: React.FC<Props> = ({
   top = 'medium',
@@ -25,5 +25,5 @@ export const VerticalPadding: React.FC<Props> = ({
     >
       {children}
     </div>
-  )
-}
+  );
+};

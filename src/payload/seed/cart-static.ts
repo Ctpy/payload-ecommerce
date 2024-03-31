@@ -1,4 +1,4 @@
-import type { Page } from '../payload-types'
+import type { Page } from '../payload-types';
 
 export const staticCart: Page = {
   id: '',
@@ -106,4 +106,4 @@ export const staticCart: Page = {
       blockType: 'cta',
     },
   ],
-}
+};

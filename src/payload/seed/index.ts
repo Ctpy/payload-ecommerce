@@ -1,40 +1,40 @@
-import fs from 'fs'
-import path from 'path'
-import type { Payload } from 'payload'
+import fs from 'fs';
+import path from 'path';
+import type { Payload } from 'payload';
 
-import { cartPage } from './cart-page'
-import { home } from './home'
-import { image1 } from './image-1'
-import { image2 } from './image-2'
-import { image3 } from './image-3'
-import { product1 } from './product-1'
-import { product2 } from './product-2'
-import { product3 } from './product-3'
-import { productsPage } from './products-page'
+import { cartPage } from './cart-page';
+import { home } from './home';
+import { image1 } from './image-1';
+import { image2 } from './image-2';
+import { image3 } from './image-3';
+import { product1 } from './product-1';
+import { product2 } from './product-2';
+import { product3 } from './product-3';
+import { productsPage } from './products-page';
 
-const collections = ['categories', 'media', 'pages', 'products']
-const globals = ['header', 'settings', 'footer']
+const collections = ['categories', 'media', 'pages', 'products'];
+const globals = ['header', 'settings', 'footer'];
 
 // Next.js revalidation errors are normal when seeding the database without a server running
 // i.e. running `yarn seed` locally instead of using the admin UI within an active app
 // The app is not running to revalidate the pages and so the API routes are not available
 // These error messages can be ignored: `Error hitting revalidate route for...`
 export const seed = async (payload: Payload): Promise<void> => {
-  payload.logger.info('Seeding database...')
+  payload.logger.info('Seeding database...');
 
   // we need to clear the media directory before seeding
   // as well as the collections and globals
   // this is because while `yarn seed` drops the database
   // the custom `/api/seed` endpoint does not
 
-  payload.logger.info(`— Clearing media...`)
+  payload.logger.info(`— Clearing media...`);
 
-  const mediaDir = path.resolve(__dirname, '../../media')
+  const mediaDir = path.resolve(__dirname, '../../media');
   if (fs.existsSync(mediaDir)) {
-    fs.rmdirSync(mediaDir, { recursive: true })
+    fs.rmdirSync(mediaDir, { recursive: true });
   }
 
-  payload.logger.info(`— Clearing collections and globals...`)
+  payload.logger.info(`— Clearing collections and globals...`);
 
   // clear the database
   await Promise.all([
@@ -50,9 +50,9 @@ export const seed = async (payload: Payload): Promise<void> => {
         data: {},
       }),
     ), // eslint-disable-line function-paren-newline
-  ])
+  ]);
 
-  payload.logger.info(`— Seeding media...`)
+  payload.logger.info(`— Seeding media...`);
 
   const [image1Doc, image2Doc, image3Doc] = await Promise.all([
     await payload.create({
@@ -70,19 +70,19 @@ export const seed = async (payload: Payload): Promise<void> => {
       filePath: path.resolve(__dirname, 'image-3.jpg'),
       data: image3,
     }),
-  ])
+  ]);
 
-  let image1ID = image1Doc.id
-  let image2ID = image2Doc.id
-  let image3ID = image3Doc.id
+  let image1ID = image1Doc.id;
+  let image2ID = image2Doc.id;
+  let image3ID = image3Doc.id;
 
   if (payload.db.defaultIDType === 'text') {
-    image1ID = `"${image1ID}"`
-    image2ID = `"${image2ID}"`
-    image3ID = `"${image3ID}"`
+    image1ID = `"${image1ID}"`;
+    image2ID = `"${image2ID}"`;
+    image3ID = `"${image3ID}"`;
   }
 
-  payload.logger.info(`— Seeding categories...`)
+  payload.logger.info(`— Seeding categories...`);
 
   const [apparelCategory, ebooksCategory, coursesCategory] = await Promise.all([
     await payload.create({
@@ -103,9 +103,9 @@ export const seed = async (payload: Payload): Promise<void> => {
         title: 'Online courses',
       },
     }),
-  ])
+  ]);
 
-  payload.logger.info(`— Seeding products...`)
+  payload.logger.info(`— Seeding products...`);
 
   // Do not create product with `Promise.all` because we want the products to be created in order
   // This way we can sort them by `createdAt` or `publishedOn` and they will be in the expected order
@@ -117,7 +117,7 @@ export const seed = async (payload: Payload): Promise<void> => {
         image1ID,
       ),
     ),
-  })
+  });
 
   const product2Doc = await payload.create({
     collection: 'products',
@@ -127,7 +127,7 @@ export const seed = async (payload: Payload): Promise<void> => {
         image2ID,
       ),
     ),
-  })
+  });
 
   const product3Doc = await payload.create({
     collection: 'products',
@@ -137,7 +137,7 @@ export const seed = async (payload: Payload): Promise<void> => {
         image3ID,
       ),
     ),
-  })
+  });
 
   // update each product with related products
 
@@ -163,22 +163,22 @@ export const seed = async (payload: Payload): Promise<void> => {
         relatedProducts: [product1Doc.id, product2Doc.id],
       },
     }),
-  ])
+  ]);
 
-  payload.logger.info(`— Seeding products page...`)
+  payload.logger.info(`— Seeding products page...`);
 
   const productsPageDoc = await payload.create({
     collection: 'pages',
     data: productsPage,
-  })
+  });
 
-  let productsPageID = productsPageDoc.id
+  let productsPageID = productsPageDoc.id;
 
   if (payload.db.defaultIDType === 'text') {
-    productsPageID = `"${productsPageID}"`
+    productsPageID = `"${productsPageID}"`;
   }
 
-  payload.logger.info(`— Seeding home page...`)
+  payload.logger.info(`— Seeding home page...`);
 
   await payload.create({
     collection: 'pages',
@@ -188,27 +188,27 @@ export const seed = async (payload: Payload): Promise<void> => {
         .replace(/"\{\{PRODUCT2_IMAGE\}\}"/g, image2ID)
         .replace(/"\{\{PRODUCTS_PAGE_ID\}\}"/g, productsPageID),
     ),
-  })
+  });
 
-  payload.logger.info(`— Seeding cart page...`)
+  payload.logger.info(`— Seeding cart page...`);
 
   await payload.create({
     collection: 'pages',
     data: JSON.parse(
       JSON.stringify(cartPage).replace(/"\{\{PRODUCTS_PAGE_ID\}\}"/g, productsPageID),
     ),
-  })
+  });
 
-  payload.logger.info(`— Seeding settings...`)
+  payload.logger.info(`— Seeding settings...`);
 
   await payload.updateGlobal({
     slug: 'settings',
     data: {
       productsPage: productsPageDoc.id,
     },
-  })
+  });
 
-  payload.logger.info(`— Seeding header...`)
+  payload.logger.info(`— Seeding header...`);
 
   await payload.updateGlobal({
     slug: 'header',
@@ -226,7 +226,7 @@ export const seed = async (payload: Payload): Promise<void> => {
         },
       ],
     },
-  })
+  });
 
-  payload.logger.info('Seeded database successfully!')
-}
+  payload.logger.info('Seeded database successfully!');
+};

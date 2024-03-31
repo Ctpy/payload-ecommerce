@@ -24,13 +24,13 @@ const policies = {
     'https://api.stripe.com',
     'https://maps.googleapis.com',
   ],
-}
+};
 
 module.exports = Object.entries(policies)
   .map(([key, value]) => {
     if (Array.isArray(value)) {
-      return `${key} ${value.join(' ')}`
+      return `${key} ${value.join(' ')}`;
     }
-    return ''
+    return '';
   })
-  .join('; ')
+  .join('; ');

@@ -1,17 +1,17 @@
-import type { AfterChangeHook } from 'payload/dist/collections/config/types'
+import type { AfterChangeHook } from 'payload/dist/collections/config/types';
 
-import type { Order } from '../../../payload-types'
+import type { Order } from '../../../payload-types';
 
 export const clearUserCart: AfterChangeHook<Order> = async ({ doc, req, operation }) => {
-  const { payload } = req
+  const { payload } = req;
 
   if (operation === 'create' && doc.orderedBy) {
-    const orderedBy = typeof doc.orderedBy === 'object' ? doc.orderedBy.id : doc.orderedBy
+    const orderedBy = typeof doc.orderedBy === 'object' ? doc.orderedBy.id : doc.orderedBy;
 
     const user = await payload.findByID({
       collection: 'users',
       id: orderedBy,
-    })
+    });
 
     if (user) {
       await payload.update({
@@ -22,9 +22,9 @@ export const clearUserCart: AfterChangeHook<Order> = async ({ doc, req, operatio
             items: [],
           },
         },
-      })
+      });
     }
   }
 
-  return
-}
+  return;
+};

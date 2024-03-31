@@ -1,35 +1,35 @@
-'use client'
+'use client';
 
-import React from 'react'
+import React from 'react';
 
-import { Chevron } from '../../../_components/Chevron'
-import { useTheme } from '..'
-import { getImplicitPreference } from '../shared'
-import { Theme, themeLocalStorageKey } from './types'
+import { Chevron } from '../../../_components/Chevron';
+import { useTheme } from '..';
+import { getImplicitPreference } from '../shared';
+import { Theme, themeLocalStorageKey } from './types';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 export const ThemeSelector: React.FC = () => {
-  const selectRef = React.useRef<HTMLSelectElement>(null)
-  const { setTheme } = useTheme()
-  const [show, setShow] = React.useState(false)
+  const selectRef = React.useRef<HTMLSelectElement>(null);
+  const { setTheme } = useTheme();
+  const [show, setShow] = React.useState(false);
 
   const onThemeChange = (themeToSet: Theme & 'auto') => {
     if (themeToSet === 'auto') {
-      setTheme(null)
-      if (selectRef.current) selectRef.current.value = 'auto'
+      setTheme(null);
+      if (selectRef.current) selectRef.current.value = 'auto';
     } else {
-      setTheme(themeToSet)
+      setTheme(themeToSet);
     }
-  }
+  };
 
   React.useEffect(() => {
-    const preference = window.localStorage.getItem(themeLocalStorageKey)
+    const preference = window.localStorage.getItem(themeLocalStorageKey);
     if (selectRef.current) {
-      selectRef.current.value = preference ?? 'auto'
-      setShow(true)
+      selectRef.current.value = preference ?? 'auto';
+      setShow(true);
     }
-  }, [])
+  }, []);
 
   return (
     <div className={[classes.selectContainer, !show && classes.hidden].filter(Boolean).join(' ')}>
@@ -50,5 +50,5 @@ export const ThemeSelector: React.FC = () => {
         </div>
       </label>
     </div>
-  )
-}
+  );
+};

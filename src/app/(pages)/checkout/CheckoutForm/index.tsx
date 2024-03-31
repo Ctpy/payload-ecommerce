@@ -1,29 +1,29 @@
-'use client'
+'use client';
 
-import React, { useCallback } from 'react'
-import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { useRouter } from 'next/navigation'
+import React, { useCallback } from 'react';
+import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/navigation';
 
-import { Order } from '../../../../payload/payload-types'
-import { Button } from '../../../_components/Button'
-import { Message } from '../../../_components/Message'
-import { priceFromJSON } from '../../../_components/Price'
-import { useCart } from '../../../_providers/Cart'
+import { Order } from '../../../../payload/payload-types';
+import { Button } from '../../../_components/Button';
+import { Message } from '../../../_components/Message';
+import { priceFromJSON } from '../../../_components/Price';
+import { useCart } from '../../../_providers/Cart';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 export const CheckoutForm: React.FC<{}> = () => {
-  const stripe = useStripe()
-  const elements = useElements()
-  const [error, setError] = React.useState<string | null>(null)
-  const [isLoading, setIsLoading] = React.useState(false)
-  const router = useRouter()
-  const { cart, cartTotal } = useCart()
+  const stripe = useStripe();
+  const elements = useElements();
+  const [error, setError] = React.useState<string | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
+  const { cart, cartTotal } = useCart();
 
   const handleSubmit = useCallback(
     async e => {
-      e.preventDefault()
-      setIsLoading(true)
+      e.preventDefault();
+      setIsLoading(true);
 
       try {
         const { error: stripeError, paymentIntent } = await stripe?.confirmPayment({
@@ -32,11 +32,11 @@ export const CheckoutForm: React.FC<{}> = () => {
           confirmParams: {
             return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/order-confirmation`,
           },
-        })
+        });
 
         if (stripeError) {
-          setError(stripeError.message)
-          setIsLoading(false)
+          setError(stripeError.message);
+          setIsLoading(false);
         }
 
         if (paymentIntent) {
@@ -63,37 +63,37 @@ export const CheckoutForm: React.FC<{}> = () => {
                       : undefined,
                 })),
               }),
-            })
+            });
 
-            if (!orderReq.ok) throw new Error(orderReq.statusText || 'Something went wrong.')
+            if (!orderReq.ok) throw new Error(orderReq.statusText || 'Something went wrong.');
 
             const {
               error: errorFromRes,
               doc,
             }: {
-              message?: string
-              error?: string
-              doc: Order
-            } = await orderReq.json()
+              message?: string;
+              error?: string;
+              doc: Order;
+            } = await orderReq.json();
 
-            if (errorFromRes) throw new Error(errorFromRes)
+            if (errorFromRes) throw new Error(errorFromRes);
 
-            router.push(`/order-confirmation?order_id=${doc.id}`)
+            router.push(`/order-confirmation?order_id=${doc.id}`);
           } catch (err) {
             // don't throw an error if the order was not created successfully
             // this is because payment _did_ in fact go through, and we don't want the user to pay twice
-            console.error(err.message) // eslint-disable-line no-console
-            router.push(`/order-confirmation?error=${encodeURIComponent(err.message)}`)
+            console.error(err.message); // eslint-disable-line no-console
+            router.push(`/order-confirmation?error=${encodeURIComponent(err.message)}`);
           }
         }
       } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Something went wrong.'
-        setError(`Error while submitting payment: ${msg}`)
-        setIsLoading(false)
+        const msg = err instanceof Error ? err.message : 'Something went wrong.';
+        setError(`Error while submitting payment: ${msg}`);
+        setIsLoading(false);
       }
     },
     [stripe, elements, router, cart, cartTotal],
-  )
+  );
 
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
@@ -109,7 +109,7 @@ export const CheckoutForm: React.FC<{}> = () => {
         />
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default CheckoutForm
+export default CheckoutForm;

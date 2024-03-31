@@ -1,29 +1,29 @@
-import React from 'react'
+import React from 'react';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 const defaultLabels = {
   plural: 'Docs',
   singular: 'Doc',
-}
+};
 
 const defaultCollectionLabels = {
   posts: {
     plural: 'Products',
     singular: 'Product',
   },
-}
+};
 
 export const PageRange: React.FC<{
-  className?: string
-  collection?: string
+  className?: string;
+  collection?: string;
   collectionLabels?: {
-    plural?: string
-    singular?: string
-  }
-  currentPage?: number
-  limit?: number
-  totalDocs?: number
+    plural?: string;
+    singular?: string;
+  };
+  currentPage?: number;
+  limit?: number;
+  totalDocs?: number;
 }> = props => {
   const {
     className,
@@ -32,16 +32,16 @@ export const PageRange: React.FC<{
     currentPage,
     limit,
     totalDocs,
-  } = props
+  } = props;
 
-  let indexStart = (currentPage ? currentPage - 1 : 1) * (limit || 1) + 1
-  if (totalDocs && indexStart > totalDocs) indexStart = 0
+  let indexStart = (currentPage ? currentPage - 1 : 1) * (limit || 1) + 1;
+  if (totalDocs && indexStart > totalDocs) indexStart = 0;
 
-  let indexEnd = (currentPage || 1) * (limit || 1)
-  if (totalDocs && indexEnd > totalDocs) indexEnd = totalDocs
+  let indexEnd = (currentPage || 1) * (limit || 1);
+  if (totalDocs && indexEnd > totalDocs) indexEnd = totalDocs;
 
   const { plural, singular } =
-    collectionLabelsFromProps || defaultCollectionLabels[collection || ''] || defaultLabels || {}
+    collectionLabelsFromProps || defaultCollectionLabels[collection || ''] || defaultLabels || {};
 
   return (
     <div className={[className, classes.pageRange].filter(Boolean).join(' ')}>
@@ -52,5 +52,5 @@ export const PageRange: React.FC<{
           totalDocs > 1 ? plural : singular
         }`}
     </div>
-  )
-}
+  );
+};

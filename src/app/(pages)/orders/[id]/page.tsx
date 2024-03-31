@@ -1,28 +1,28 @@
-import React, { Fragment } from 'react'
-import { Metadata } from 'next'
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import React, { Fragment } from 'react';
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
-import { Order } from '../../../../payload/payload-types'
-import { Button } from '../../../_components/Button'
-import { Gutter } from '../../../_components/Gutter'
-import { HR } from '../../../_components/HR'
-import { Media } from '../../../_components/Media'
-import { Price } from '../../../_components/Price'
-import { formatDateTime } from '../../../_utilities/formatDateTime'
-import { getMeUser } from '../../../_utilities/getMeUser'
-import { mergeOpenGraph } from '../../../_utilities/mergeOpenGraph'
+import { Order } from '../../../../payload/payload-types';
+import { Button } from '../../../_components/Button';
+import { Gutter } from '../../../_components/Gutter';
+import { HR } from '../../../_components/HR';
+import { Media } from '../../../_components/Media';
+import { Price } from '../../../_components/Price';
+import { formatDateTime } from '../../../_utilities/formatDateTime';
+import { getMeUser } from '../../../_utilities/getMeUser';
+import { mergeOpenGraph } from '../../../_utilities/mergeOpenGraph';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 export default async function Order({ params: { id } }) {
   const { token } = await getMeUser({
     nullUserRedirect: `/login?error=${encodeURIComponent(
       'You must be logged in to view this order.',
     )}&redirect=${encodeURIComponent(`/order/${id}`)}`,
-  })
+  });
 
-  let order: Order | null = null
+  let order: Order | null = null;
 
   try {
     order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}`, {
@@ -31,18 +31,18 @@ export default async function Order({ params: { id } }) {
         Authorization: `JWT ${token}`,
       },
     })?.then(async res => {
-      if (!res.ok) notFound()
-      const json = await res.json()
-      if ('error' in json && json.error) notFound()
-      if ('errors' in json && json.errors) notFound()
-      return json
-    })
+      if (!res.ok) notFound();
+      const json = await res.json();
+      if ('error' in json && json.error) notFound();
+      if ('errors' in json && json.errors) notFound();
+      return json;
+    });
   } catch (error) {
-    console.error(error) // eslint-disable-line no-console
+    console.error(error); // eslint-disable-line no-console
   }
 
   if (!order) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -72,11 +72,11 @@ export default async function Order({ params: { id } }) {
               quantity,
               product,
               product: { id, title, meta, stripeProductID },
-            } = item
+            } = item;
 
-            const isLast = index === (order?.items?.length || 0) - 1
+            const isLast = index === (order?.items?.length || 0) - 1;
 
-            const metaImage = meta?.image
+            const metaImage = meta?.image;
 
             return (
               <Fragment key={index}>
@@ -115,10 +115,10 @@ export default async function Order({ params: { id } }) {
                 </div>
                 {!isLast && <HR />}
               </Fragment>
-            )
+            );
           }
 
-          return null
+          return null;
         })}
       </div>
       <HR />
@@ -127,7 +127,7 @@ export default async function Order({ params: { id } }) {
         <Button href="/account" appearance="secondary" label="Go to account" />
       </div>
     </Gutter>
-  )
+  );
 }
 
 export async function generateMetadata({ params: { id } }): Promise<Metadata> {
@@ -138,5 +138,5 @@ export async function generateMetadata({ params: { id } }): Promise<Metadata> {
       title: `Order ${id}`,
       url: `/orders/${id}`,
     }),
-  }
+  };
 }

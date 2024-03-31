@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const BeforeLogin: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const BeforeLogin: React.FC = () => {
         {' to access their user account, order history, and more.'}
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default BeforeLogin
+export default BeforeLogin;

@@ -1,6 +1,6 @@
-import type { AfterDeleteHook } from 'payload/dist/collections/config/types'
+import type { AfterDeleteHook } from 'payload/dist/collections/config/types';
 
-import type { Product } from '../../../payload-types'
+import type { Product } from '../../../payload-types';
 
 export const deleteProductFromCarts: AfterDeleteHook<Product> = async ({ req, id }) => {
   const usersWithProductInCart = await req.payload.find({
@@ -11,17 +11,17 @@ export const deleteProductFromCarts: AfterDeleteHook<Product> = async ({ req, id
         equals: id,
       },
     },
-  })
+  });
 
   if (usersWithProductInCart.totalDocs > 0) {
     await Promise.all(
       usersWithProductInCart.docs.map(async user => {
-        const cart = user.cart
-        const itemsWithoutProduct = cart.items.filter(item => item.product !== id)
+        const cart = user.cart;
+        const itemsWithoutProduct = cart.items.filter(item => item.product !== id);
         const cartWithoutProduct = {
           ...cart,
           items: itemsWithoutProduct,
-        }
+        };
 
         return req.payload.update({
           collection: 'users',
@@ -29,8 +29,8 @@ export const deleteProductFromCarts: AfterDeleteHook<Product> = async ({ req, id
           data: {
             cart: cartWithoutProduct,
           },
-        })
+        });
       }),
-    )
+    );
   }
-}
+};

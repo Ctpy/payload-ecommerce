@@ -1,23 +1,23 @@
-import { slateEditor } from '@payloadcms/richtext-slate'
+import { slateEditor } from '@payloadcms/richtext-slate';
 import type {
   AdapterArguments,
   RichTextElement,
   RichTextLeaf,
-} from '@payloadcms/richtext-slate/dist/types'
-import type { RichTextField } from 'payload/dist/fields/config/types'
+} from '@payloadcms/richtext-slate/dist/types';
+import type { RichTextField } from 'payload/dist/fields/config/types';
 
-import deepMerge from '../../utilities/deepMerge'
-import link from '../link'
-import elements from './elements'
-import leaves from './leaves'
+import deepMerge from '../../utilities/deepMerge';
+import link from '../link';
+import elements from './elements';
+import leaves from './leaves';
 
 type RichText = (
   overrides?: Partial<RichTextField> & { admin?: AdapterArguments['admin'] },
   additions?: {
-    elements?: RichTextElement[]
-    leaves?: RichTextLeaf[]
+    elements?: RichTextElement[];
+    leaves?: RichTextLeaf[];
   },
-) => RichTextField
+) => RichTextField;
 
 const richText: RichText = (
   overrides,
@@ -84,13 +84,13 @@ const richText: RichText = (
       elements: [...elements, ...(additions.elements || [])],
       leaves: [...leaves, ...(additions.leaves || [])],
     },
-  )
+  );
 
   const fieldOverrides = {
     ...(overrides || {}),
-  }
+  };
 
-  delete fieldOverrides.admin
+  delete fieldOverrides.admin;
 
   return deepMerge<RichTextField, Partial<RichTextField>>(
     {
@@ -102,7 +102,7 @@ const richText: RichText = (
       }),
     },
     fieldOverrides || {},
-  )
-}
+  );
+};
 
-export default richText
+export default richText;

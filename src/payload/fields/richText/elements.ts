@@ -1,7 +1,7 @@
-import type { RichTextElement } from '@payloadcms/richtext-slate/dist/types'
+import type { RichTextElement } from '@payloadcms/richtext-slate/dist/types';
 
-import label from './label'
-import largeBody from './largeBody'
+import label from './label';
+import largeBody from './largeBody';
 
 const elements: RichTextElement[] = [
   'blockquote',
@@ -13,6 +13,6 @@ const elements: RichTextElement[] = [
   'link',
   largeBody,
   label,
-]
+];
 
-export default elements
+export default elements;
