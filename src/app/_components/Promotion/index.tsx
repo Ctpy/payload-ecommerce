@@ -14,6 +14,7 @@ const Promotion = () => {
   const targetDate = new Date();
   targetDate.setDate(targetDate.getDate() + 3);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     const timerInterval = setInterval(() => {
       const currentTime = new Date();

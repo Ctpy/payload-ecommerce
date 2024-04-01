@@ -2,14 +2,14 @@ version: '3'
 
 services:
   payload:
-    image: node:18-alpine
+    image: node:20-alpine
     ports:
       - '10000:10000'
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
     working_dir: /home/node/app/
-    command: sh -c "npm install pnpm && pnpm install && pnpm dev"
+    command: sh -c "yarn install && yarn build && yarn serve"
     depends_on:
       - mongo
     env_file:
