@@ -44,9 +44,8 @@ export const Archive: Block = {
       ],
     },
     {
-      type: 'relationship',
       name: 'categories',
-      label: 'Categories To Show',
+      type: 'relationship',
       relationTo: 'categories',
       hasMany: true,
       admin: {
